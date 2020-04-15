@@ -17,7 +17,8 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "hieregistry.title" heading. This extension is enabled by defining (uncommenting) it in the config.xml file.
+ * "hieregistry.title" heading. This extension is enabled by defining (uncommenting) it in the
+ * config.xml file.
  */
 public class AdminList extends AdministrationSectionExt {
 	
@@ -44,7 +45,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		map.put("module/hieregistry/hieregistry.form", "hieregistry.title");
 		map.put("hieregistry/hieregistry.page", "hieregistry.refapp.title");
-
+		
 		return map;
 	}
 	
