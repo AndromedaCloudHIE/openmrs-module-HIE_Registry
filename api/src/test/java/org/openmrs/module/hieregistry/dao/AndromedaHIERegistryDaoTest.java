@@ -7,13 +7,14 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.hieregistry.api.dao;
+package org.openmrs.module.hieregistry.dao;
 
 import org.junit.Test;
 import org.junit.Ignore;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hieregistry.Item;
+import org.openmrs.module.hieregistry.api.dao.AndromedaHIERegistryDao;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.hamcrest.Matchers.*;
@@ -39,7 +40,7 @@ public class AndromedaHIERegistryDaoTest extends BaseModuleContextSensitiveTest 
 		//Given
 		Item item = new Item();
 		item.setDescription("some description");
-		item.setOwner(userService.getUser(1));
+		//item.setOwner(userService.getUser(1));
 		
 		//When
 		dao.saveItem(item);

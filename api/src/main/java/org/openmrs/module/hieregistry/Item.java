@@ -24,7 +24,7 @@ import javax.persistence.Table;
 /**
  * Please note that a corresponding table schema must be created in liquibase.xml.
  */
-//Uncomment 2 lines below if you want to make the Item class persistable, see also AndromedaHIERegistryDaoTest and liquibase.xml
+
 //@Entity(name = "hieregistry.Item")
 //@Table(name = "hieregistry_item")
 public class Item extends BaseOpenmrsData {

@@ -5,35 +5,72 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
  
-    <!--
-    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
-    	documentation on this file.
     
-        See http://www.liquibase.org/manual/home#available_database_refactorings
-        for a list of supported elements and attributes
-    -->
- 
- 	<!-- Uncomment the changeset below if you want to make the Item class persistable, see also Item and AndromedaHIERegistryDaoTest -->
- 	<!--
-	<changeSet id="hieregistry-2016-08-02-12-21" author="raff">
+    <changeSet id="hieregistry-1" author="Mutesasira Moses">
 		<preConditions onFail="MARK_RAN">
-			<not><tableExists tableName="hieregistry_item"/></not>
+			<not><tableExists tableName="hie_Patient"/></not>
 		</preConditions>
 		<comment>
-			Creating the hieregistry_item table
+			Creating the hie_Patient table
 		</comment>
-		<createTable tableName="hieregistry_item">
-			<column name="hieregistry_item_id" type="int" autoIncrement="true">
+		<createTable tableName="hie_Patient">
+			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false"/>
 			</column>
 			<column name="uuid" type="char(38)">
 				<constraints nullable="false" unique="true"></constraints>
 			</column>
-			<column name="owner" type="int" />
-			<column name="description" type="varchar(255)" />
+			<column name="firstName" type="varchar(255)" />
+			<column name="lastName" type="varchar(255)" />
+			<column name="familyname" type="varchar(255)" />
+			
+			<column name="NIN" type="varchar(255)" >		
+			<constraints nullable="true" unique="true"></constraints>
+			</column>
+			<column name="dob" type="DATETIME" />
 		</createTable>
-        <addForeignKeyConstraint constraintName="hieregistry_item_owner_fk" baseTableName="hieregistry_item" baseColumnNames="owner"  referencedTableName="users"
-                                 referencedColumnNames="user_id" />
-    </changeSet> -->
+    </changeSet>
+    
+    <changeSet id="hieregistry-2" author="Mutesasira Moses">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="hie_Identifiers"/></not>
+		</preConditions>
+		<comment>
+			Creating the hie_Identifiers table
+		</comment>
+		<createTable tableName="hie_Identifiers">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true"></constraints>
+			</column>
+			<column name="idetifier" type="varchar(255)" />
+            <column name="hie_patient_id" type="int" />
+		</createTable>
+		<addForeignKeyConstraint constraintName="hiepatient_fk" baseTableName="hie_Identifiers" baseColumnNames="hie_patient_id"  referencedTableName="hie_Patient"
+                                 referencedColumnNames="id" />
+    </changeSet>
+    
+    <changeSet id="hieregistry-3" author="Mutesasira Moses">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="hie_DataFormat"/></not>
+		</preConditions>
+		<comment>
+			Creating the hie_DataFormat table
+		</comment>
+		<createTable tableName="hie_DataFormat">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true"></constraints>
+			</column>
+			<column name="dataFormat" type="varchar(255)" />
+            <column name="hie_patient_id" type="int" />
+		</createTable>
+		<addForeignKeyConstraint constraintName="hiepatient_fk2" baseTableName="hie_DataFormat" baseColumnNames="hie_patient_id"  referencedTableName="hie_Patient"
+                                 referencedColumnNames="id" />
+    </changeSet>
  
 </databaseChangeLog>
