@@ -9,10 +9,13 @@
  */
 package org.openmrs.module.hieregistry.api;
 
+import java.util.List;
+
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.hieregistry.AndromedaHIERegistryConfig;
+import org.openmrs.module.hieregistry.HiePatient;
 import org.openmrs.module.hieregistry.Item;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,4 +48,36 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	@Authorized(AndromedaHIERegistryConfig.MODULE_PRIVILEGE)
 	@Transactional
 	Item saveItem(Item item) throws APIException;
+	
+	
+	@Transactional
+	HiePatient recordHiePatient(HiePatient hiePatient) throws APIException;
+	
+	@Transactional
+	HiePatient getHiePatientByUuid(String uuid) throws APIException;
+	
+	@Transactional
+	HiePatient getHiePatientById(Integer id) throws APIException ;
+	
+	@Transactional
+	HiePatient getHiePatientByNames(String names) throws APIException;
+	
+	@Transactional
+	HiePatient getHiePatientByIdentifier(String id) throws APIException;
+	
+	@Transactional
+	HiePatient getHiePatientByNin(String nin) throws APIException;
+	
+	@Transactional
+	List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException;
+	
+	@Transactional
+	HiePatient getHiePatient(String id , String nin,String names) throws APIException;
+	
+	@Transactional
+	List <HiePatient> searchHiePatient(String query) throws APIException;
+	
+	@Transactional
+	List <HiePatient> getAllHiePatients() throws APIException;
+		
 }
