@@ -27,6 +27,10 @@ public class AndromedaHIERegistryDao {
 	@Autowired
 	DbSessionFactory sessionFactory;
 	
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	private DbSession getSession() {
 		return sessionFactory.getCurrentSession();
 	}
@@ -46,29 +50,27 @@ public class AndromedaHIERegistryDao {
 		getSession().saveOrUpdate(hiePatient);
 		return hiePatient;
 	}
-
-
+	
 	public HiePatient getHiePatientByUuid(String uuid) throws APIException {
 		return (HiePatient) getSession().createCriteria(HiePatient.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
-
-    
+	
 	public HiePatient getHiePatientById(Integer id) throws APIException {
 		
-		return ( HiePatient) sessionFactory.getCurrentSession().get( HiePatient.class, id);
+		return (HiePatient) sessionFactory.getCurrentSession().get(HiePatient.class, id);
 	}
 	
 	//TO DO . Implement hibernate Full text search rather than DB seach to optimise  Search functionality
 	@SuppressWarnings("unchecked")
-	public List <HiePatient> searchHiePatient(String search) throws APIException {
-
+	public List<HiePatient> searchHiePatient(String search) throws APIException {
+		
 		String hql = "SELECT * FROM HiePatient hp WHERE hp.firstName LIKE :query "
 		        + "OR hp.lastName LIKE :query OR hp.familyname LIKE :query";
 		
-				Query query = sessionFactory.getCurrentSession().createQuery(hql);
-				String hqlregx = search + "%" ;
-		        query.setString("query", hqlregx);
-		return  query.list();
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		String hqlregx = search + "%";
+		query.setString("query", hqlregx);
+		return query.list();
 		
 	}
 	
@@ -86,9 +88,9 @@ public class AndromedaHIERegistryDao {
 		
 		String hql = "SELECT * FROM HiePatient hp WHERE Identifiers.idetifier =:id AND hp.id  = Identifiers.hie_patient_id";
 		
-				Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		        query.setString("query", identifier);
-		return (HiePatient)query.uniqueResult();
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString("query", identifier);
+		return (HiePatient) query.uniqueResult();
 	}
 	
 	//.......................................................... TO DO
@@ -97,19 +99,14 @@ public class AndromedaHIERegistryDao {
 		return null;
 	}
 	
-	
-
 	public List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 	public HiePatient getHiePatient(String id, String nin, String names) throws APIException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	
 }

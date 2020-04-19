@@ -9,55 +9,29 @@
  */
 package org.openmrs.module.hieregistry;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.openmrs.User;
-import org.openmrs.api.UserService;
-import org.openmrs.module.hieregistry.Item;
-import org.openmrs.module.hieregistry.api.dao.AndromedaHIERegistryDao;
-import org.openmrs.module.hieregistry.api.impl.AndromedaHIERegistryServiceImpl;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.hieregistry.api.AndromedaHIERegistryService;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
  * This is a unit test, which verifies logic in AndromedaHIERegistryService. It doesn't extend
  * BaseModuleContextSensitiveTest, thus it is run without the in-memory DB and Spring context.
  */
-public class AndromedaHIERegistryServiceTest {
+//@ContextConfiguration(classes = HIESpringConfiguration.class, inheritLocations = false)
+public class AndromedaHIERegistryServiceTest extends BaseModuleContextSensitiveTest {
 	
-	@InjectMocks
-	AndromedaHIERegistryServiceImpl basicModuleService;
-	
-	@Mock
-	AndromedaHIERegistryDao dao;
-	
-	@Mock
-	UserService userService;
-	
-	@Before
-	public void setupMocks() {
-		MockitoAnnotations.initMocks(this);
-	}
+
 	
 	@Test
-	public void saveItem_shouldSetOwnerIfNotSet() {
-		//Given
-		Item item = new Item();
-		item.setDescription("some description");
+	public void should_return_HiePatient() throws Exception {
+		AndromedaHIERegistryService hieService = Context.getService(AndromedaHIERegistryService.class);
+		//initializeInMemoryDatabase();
+		executeDataSet("HieDataset.xml");
+		//authenticate();
 		
-		when(dao.saveItem(item)).thenReturn(item);
 		
-		User user = new User();
-		when(userService.getUser(1)).thenReturn(user);
-		
-		//When
-		basicModuleService.saveItem(item);
-		
-		//Then
-		assertThat(item, hasProperty("owner", is(user)));
+		HiePatient pat = hieService.getHiePatientById(1);
+		System.out.println(pat.getFamilyname());
 	}
 }

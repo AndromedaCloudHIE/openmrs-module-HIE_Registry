@@ -49,7 +49,6 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	@Transactional
 	Item saveItem(Item item) throws APIException;
 	
-	
 	@Transactional
 	HiePatient recordHiePatient(HiePatient hiePatient) throws APIException;
 	
@@ -57,7 +56,7 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	HiePatient getHiePatientByUuid(String uuid) throws APIException;
 	
 	@Transactional
-	HiePatient getHiePatientById(Integer id) throws APIException ;
+	HiePatient getHiePatientById(Integer id) throws APIException;
 	
 	@Transactional
 	HiePatient getHiePatientByNames(String names) throws APIException;
@@ -72,12 +71,12 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException;
 	
 	@Transactional
-	HiePatient getHiePatient(String id , String nin,String names) throws APIException;
+	HiePatient getHiePatient(String id, String nin, String names) throws APIException;
 	
 	@Transactional
-	List <HiePatient> searchHiePatient(String query) throws APIException;
+	List<HiePatient> searchHiePatient(String query) throws APIException;
 	
 	@Transactional
-	List <HiePatient> getAllHiePatients() throws APIException;
-		
+	List<HiePatient> getAllHiePatients() throws APIException;
+	
 }

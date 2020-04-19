@@ -18,9 +18,11 @@ import org.openmrs.module.hieregistry.HiePatient;
 import org.openmrs.module.hieregistry.Item;
 import org.openmrs.module.hieregistry.api.AndromedaHIERegistryService;
 import org.openmrs.module.hieregistry.api.dao.AndromedaHIERegistryDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AndromedaHIERegistryServiceImpl extends BaseOpenmrsService implements AndromedaHIERegistryService {
 	
+	@Autowired
 	AndromedaHIERegistryDao dao;
 	
 	UserService userService;
@@ -28,6 +30,7 @@ public class AndromedaHIERegistryServiceImpl extends BaseOpenmrsService implemen
 	/**
 	 * Injected in moduleApplicationContext.xml
 	 */
+	
 	public void setDao(AndromedaHIERegistryDao dao) {
 		this.dao = dao;
 	}
@@ -54,43 +57,43 @@ public class AndromedaHIERegistryServiceImpl extends BaseOpenmrsService implemen
 	}
 	
 	//...............................................
-
+	
 	@Override
 	public HiePatient recordHiePatient(HiePatient hiePatient) throws APIException {
 		
 		return dao.recordHiePatient(hiePatient);
 	}
-
+	
 	@Override
 	public HiePatient getHiePatientByUuid(String uuid) throws APIException {
 		
 		return dao.getHiePatientByUuid(uuid);
 	}
-
+	
 	@Override
 	public HiePatient getHiePatientById(Integer id) throws APIException {
 		
 		return dao.getHiePatientById(id);
 	}
-	  
+	
 	@Override
 	public HiePatient getHiePatientByIdentifier(String identifier) throws APIException {
-	
+		
 		return dao.getHiePatientByIdentifier(identifier);
 	}
-
+	
 	@Override
 	public HiePatient getHiePatientByNin(String nin) throws APIException {
-	
+		
 		return dao.getHiePatientByNin(nin);
 	}
 	
 	@Override
-	public List <HiePatient> searchHiePatient(String query) throws APIException {
+	public List<HiePatient> searchHiePatient(String query) throws APIException {
 		
 		return dao.searchHiePatient(query);
 	}
-
+	
 	@Override
 	public List<HiePatient> getAllHiePatients() throws APIException {
 		return dao.getAllHiePatients();
@@ -103,18 +106,17 @@ public class AndromedaHIERegistryServiceImpl extends BaseOpenmrsService implemen
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public HiePatient getHiePatient(String id, String nin, String names) throws APIException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 }

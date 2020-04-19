@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+  <hie_Patient id="1" patient_id="1" uuid="sample UUID" firstName="moses" lastName="Mutessira" 
+  familyname="kavuma"  NIN="nin" dob="2005-09-22 00:00:00"/>
+  
+  <hie_Identifiers id="1" patient_id="1" uuid="sample UUID2" idetifier="xxxxx" 
+    hie_patient_id ="1"/>
+    
+  <hie_DataFormat id="1" uuid="sample UUID" dataFormat="Clinical" hie_patient_id ="1" />
+    
+</dataset>
