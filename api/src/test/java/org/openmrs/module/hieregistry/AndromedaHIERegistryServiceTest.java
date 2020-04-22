@@ -9,29 +9,98 @@
  */
 package org.openmrs.module.hieregistry;
 
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hieregistry.api.AndromedaHIERegistryService;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
-/**
- * This is a unit test, which verifies logic in AndromedaHIERegistryService. It doesn't extend
- * BaseModuleContextSensitiveTest, thus it is run without the in-memory DB and Spring context.
- */
-//@ContextConfiguration(classes = HIESpringConfiguration.class, inheritLocations = false)
+import junit.framework.Assert;
+
 public class AndromedaHIERegistryServiceTest extends BaseModuleContextSensitiveTest {
 	
-
+	private AndromedaHIERegistryService hieService;
+	
+	@Before
+	public void init() throws Exception {
+		initializeInMemoryDatabase();
+		executeDataSet("HieDataset.xml");
+		authenticate();
+		hieService = Context.getService(AndromedaHIERegistryService.class);
+	}
+	
+	@Test
+	@SuppressWarnings("deprecation")
+	public void should_save_HiePatient() throws Exception {
+		
+		//save patient
+		HiePatient pat = new HiePatient();
+		pat.setFirstName("Kamoga");
+		pat.setFamilyname("Pianist");
+		pat.setNIN("UGPAT");
+		
+		Date dob = new Date(2000, 11, 21);
+		pat.setDob(dob);
+		//record patient
+		HiePatient pat2 = hieService.recordHiePatient(pat);
+		
+		Assert.assertNotNull(pat2.getUuid());
+		Assert.assertEquals("Kamoga", pat.getFirstName());
+		Assert.assertNull(pat2.getLastName());
+	}
 	
 	@Test
 	public void should_return_HiePatient() throws Exception {
-		AndromedaHIERegistryService hieService = Context.getService(AndromedaHIERegistryService.class);
-		//initializeInMemoryDatabase();
-		executeDataSet("HieDataset.xml");
-		//authenticate();
 		
-		
+		//get patient by id
 		HiePatient pat = hieService.getHiePatientById(1);
-		System.out.println(pat.getFamilyname());
+		Assert.assertEquals("kavuma", pat.getFamilyname());	
+	}
+	
+	@Test
+	public void should_return_HiePatient_by_uuid() throws Exception {
+		
+		//get patient by uuid
+		HiePatient pat = hieService.getHiePatientByUuid("UUID2");
+		Assert.assertEquals("kavuma2", pat.getFamilyname());
+	}
+	
+	@Test
+	public void should_return_HiePatient_by_Nin() throws Exception {
+		
+		//get patient by NIN
+		HiePatient pat = hieService.getHiePatientByNin("nin2");
+		Assert.assertEquals("kavuma2", pat.getFamilyname());
+	}
+	
+	@Test
+	public void should_return_All_HiePatient() throws Exception {
+		//get all patients 
+		List<HiePatient> pats = hieService.getAllHiePatients();
+		Assert.assertEquals(4, pats.size());
+	}
+	
+	@Test
+	public void should_search_HiePatients_By_Name() throws Exception {
+		//search patients
+		List<HiePatient> pats = hieService.searchHiePatient("xx");
+		Assert.assertEquals(2, pats.size());
+	}
+	
+	@Test
+	public void should_return_HiePatient_By_Identifier() throws Exception {
+		//get patient by Identifier
+		HiePatient pat = hieService.getHiePatientByIdentifier("xxxxx4");
+		Assert.assertEquals("kavuma2", pat.getFamilyname());
+	}
+	
+	@Test
+	public void should_return_HiePatients_By_DataClasses() throws Exception {
+		//get patient by Data Class
+		List<HiePatient> pats = hieService.getHiePatientsByDataFormat("image");
+		Assert.assertEquals(2, pats.size());
 	}
 }

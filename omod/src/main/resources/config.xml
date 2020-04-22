@@ -44,9 +44,13 @@
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
 	
-	<packagesWithMappedClasses>
+	 <packagesWithMappedClasses>
         org.openmrs.module.hieregistry
-    </packagesWithMappedClasses>
+    </packagesWithMappedClasses> 
+    <!-- <mappingFiles>
+	   Hie.hbm.xml 
+    </mappingFiles> -->
+  
 	
 	<!-- AOP
 	<advice>

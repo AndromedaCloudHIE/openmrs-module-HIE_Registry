@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hieregistry">
+
+<class name="HiePatient" table="hie_Patient">
+<id name="id" type="int" column="id" unsaved-value="0">
+<generator class="native" />
+</id>
+<discriminator column="id" insert="false" />
+<!-- <property name="uuid" type="string" length="38" not-null="true" /> -->
+<property name="firstName" type="string" length="225" not-null="true" />
+<property name="lastName" type="string" length="225" not-null="false" />
+<property name="familyname" type="string" length="225" not-null="false" />
+<property name="NIN" type="string" length="225" not-null="false" />
+<property name="dob" type="java.util.Date"  not-null="false" />
+</class>
+
+<class name="Identifiers" table="hie_Identifiers">
+<id name="id" type="int" column="id" unsaved-value="0">
+<generator class="native" />
+</id>
+<discriminator column="id" insert="false" />
+<!-- <property name="uuid" type="string" length="38" not-null="true" /> -->
+<property name="idetifier" type="string" length="225" not-null="true" />
+<many-to-one name="hiepatient" class="org.openmrs.module.hieregistry.HiePatient" column="hie_patient_id" />
+</class>
+
+<class name="DataFormat" table="hie_DataFormat">
+<id name="id" type="int" column="id" unsaved-value="0">
+<generator class="native" />
+</id>
+<discriminator column="id" insert="false" />
+<!-- <property name="uuid" type="string" length="38" not-null="true" /> -->
+<property name="dataFormat" type="string" length="225" not-null="true" />
+<many-to-one name="hiepatient" class="org.openmrs.module.hieregistry.HiePatient" column="hie_patient_id" />
+</class>
+</hibernate-mapping>

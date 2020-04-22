@@ -6,6 +6,7 @@
 
 <hibernate-configuration>
     <session-factory> 
-        <mapping class="org.openmrs.module.hieregistry.HiePatient"/>
+       <mapping class="org.openmrs.module.hieregistry.HiePatient"/> 
+       <!--  <mapping resource="Hie.hbm.xml"/> -->
     </session-factory>
 </hibernate-configuration>

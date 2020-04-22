@@ -17,7 +17,6 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.hieregistry.HiePatient;
-import org.openmrs.module.hieregistry.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,16 +34,6 @@ public class AndromedaHIERegistryDao {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	public Item getItemByUuid(String uuid) {
-		return (Item) getSession().createCriteria(Item.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
-	}
-	
-	public Item saveItem(Item item) {
-		getSession().saveOrUpdate(item);
-		return item;
-	}
-	
-	//.........................................
 	
 	public HiePatient recordHiePatient(HiePatient hiePatient) throws APIException {
 		getSession().saveOrUpdate(hiePatient);
@@ -64,7 +53,7 @@ public class AndromedaHIERegistryDao {
 	@SuppressWarnings("unchecked")
 	public List<HiePatient> searchHiePatient(String search) throws APIException {
 		
-		String hql = "SELECT * FROM HiePatient hp WHERE hp.firstName LIKE :query "
+		String hql = "FROM HiePatient hp WHERE hp.firstName LIKE :query "
 		        + "OR hp.lastName LIKE :query OR hp.familyname LIKE :query";
 		
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
@@ -74,6 +63,7 @@ public class AndromedaHIERegistryDao {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<HiePatient> getAllHiePatients() throws APIException {
 		
 		return sessionFactory.getCurrentSession().createQuery("From HiePatient").list();
@@ -86,27 +76,22 @@ public class AndromedaHIERegistryDao {
 	
 	public HiePatient getHiePatientByIdentifier(String identifier) throws APIException {
 		
-		String hql = "SELECT * FROM HiePatient hp WHERE Identifiers.idetifier =:id AND hp.id  = Identifiers.hie_patient_id";
+		String hql = "FROM HiePatient hp WHERE hp.id = (SELECT Ids.hiepatient.id FROM Identifiers Ids WHERE  Ids.idetifier =:ident) ";
 		
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		query.setString("query", identifier);
+		query.setString("ident", identifier);
 		return (HiePatient) query.uniqueResult();
 	}
 	
-	//.......................................................... TO DO
-	public HiePatient getHiePatientByNames(String names) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+	@SuppressWarnings("unchecked")
 	public List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
+        String hql = "FROM HiePatient hp WHERE hp.id IN (SELECT df.hiepatient.id FROM DataFormat df WHERE df.dataFormat IN :data) ";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString("data", dataformat);
+		return query.list();
 	}
 	
-	public HiePatient getHiePatient(String id, String nin, String names) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

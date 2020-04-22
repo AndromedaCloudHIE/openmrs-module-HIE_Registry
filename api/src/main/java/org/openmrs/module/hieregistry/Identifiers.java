@@ -8,12 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Entity;
+import javax.persistence.Entity;
 import org.openmrs.BaseOpenmrsData;
 
 @Entity
 @Table(name = "hie_Identifiers")
-public class Identifiers extends BaseOpenmrsData {
+public class Identifiers  {
 	
 	@Id
 	@GeneratedValue
@@ -25,7 +25,7 @@ public class Identifiers extends BaseOpenmrsData {
 	private String idetifier;
 	
 	@ManyToOne
-	@JoinColumn(name = "hie_patient_id")
+	@JoinColumn(name = "hie_patient_id" ,nullable = false)
 	private HiePatient hiepatient;
 	
 	public String getIdetifier() {
@@ -44,24 +44,15 @@ public class Identifiers extends BaseOpenmrsData {
 		this.hiepatient = hiepatient;
 	}
 	
-	@Override
+	
 	public Integer getId() {
 		return id;
 	}
 	
-	@Override
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	
-	@Override
-	public String getUuid() {
-		return super.getUuid();
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		super.setUuid(uuid);
-	}
 	
 }
