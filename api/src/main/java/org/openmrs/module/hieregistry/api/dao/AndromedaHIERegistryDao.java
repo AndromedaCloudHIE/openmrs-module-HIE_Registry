@@ -17,7 +17,6 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.hieregistry.HiePatient;
-import org.openmrs.module.hieregistry.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,51 +26,44 @@ public class AndromedaHIERegistryDao {
 	@Autowired
 	DbSessionFactory sessionFactory;
 	
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	private DbSession getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	public Item getItemByUuid(String uuid) {
-		return (Item) getSession().createCriteria(Item.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
-	}
-	
-	public Item saveItem(Item item) {
-		getSession().saveOrUpdate(item);
-		return item;
-	}
-	
-	//.........................................
 	
 	public HiePatient recordHiePatient(HiePatient hiePatient) throws APIException {
 		getSession().saveOrUpdate(hiePatient);
 		return hiePatient;
 	}
-
-
+	
 	public HiePatient getHiePatientByUuid(String uuid) throws APIException {
 		return (HiePatient) getSession().createCriteria(HiePatient.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
-
-    
+	
 	public HiePatient getHiePatientById(Integer id) throws APIException {
 		
-		return ( HiePatient) sessionFactory.getCurrentSession().get( HiePatient.class, id);
+		return (HiePatient) sessionFactory.getCurrentSession().get(HiePatient.class, id);
 	}
 	
 	//TO DO . Implement hibernate Full text search rather than DB seach to optimise  Search functionality
 	@SuppressWarnings("unchecked")
-	public List <HiePatient> searchHiePatient(String search) throws APIException {
-
-		String hql = "SELECT * FROM HiePatient hp WHERE hp.firstName LIKE :query "
+	public List<HiePatient> searchHiePatient(String search) throws APIException {
+		
+		String hql = "FROM HiePatient hp WHERE hp.firstName LIKE :query "
 		        + "OR hp.lastName LIKE :query OR hp.familyname LIKE :query";
 		
-				Query query = sessionFactory.getCurrentSession().createQuery(hql);
-				String hqlregx = search + "%" ;
-		        query.setString("query", hqlregx);
-		return  query.list();
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		String hqlregx = search + "%";
+		query.setString("query", hqlregx);
+		return query.list();
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<HiePatient> getAllHiePatients() throws APIException {
 		
 		return sessionFactory.getCurrentSession().createQuery("From HiePatient").list();
@@ -84,32 +76,22 @@ public class AndromedaHIERegistryDao {
 	
 	public HiePatient getHiePatientByIdentifier(String identifier) throws APIException {
 		
-		String hql = "SELECT * FROM HiePatient hp WHERE Identifiers.idetifier =:id AND hp.id  = Identifiers.hie_patient_id";
+		String hql = "FROM HiePatient hp WHERE hp.id = (SELECT Ids.hiepatient.id FROM Identifiers Ids WHERE  Ids.idetifier =:ident) ";
 		
-				Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		        query.setString("query", identifier);
-		return (HiePatient)query.uniqueResult();
-	}
-	
-	//.......................................................... TO DO
-	public HiePatient getHiePatientByNames(String names) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString("ident", identifier);
+		return (HiePatient) query.uniqueResult();
 	}
 	
 	
-
+	@SuppressWarnings("unchecked")
 	public List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
+        String hql = "FROM HiePatient hp WHERE hp.id IN (SELECT df.hiepatient.id FROM DataFormat df WHERE df.dataFormat IN :data) ";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString("data", dataformat);
+		return query.list();
 	}
-
 	
-	public HiePatient getHiePatient(String id, String nin, String names) throws APIException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	
 }

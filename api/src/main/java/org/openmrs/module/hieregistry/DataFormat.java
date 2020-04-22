@@ -8,12 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Entity;
+import javax.persistence.Entity;
 import org.openmrs.BaseOpenmrsData;
 
 @Entity
 @Table(name = "hie_DataFormat")
-public class DataFormat extends BaseOpenmrsData {
+public class DataFormat  {
 	
 	@Id
 	@GeneratedValue
@@ -25,27 +25,16 @@ public class DataFormat extends BaseOpenmrsData {
 	private String dataFormat;
 	
 	@ManyToOne
-	@JoinColumn(name = "hie_patient_id")
+	@JoinColumn(name = "hie_patient_id" ,nullable = false)
 	private HiePatient hiepatient;
 	
-	@Override
+	
 	public Integer getId() {
 		return id;
 	}
 	
-	@Override
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	
-	@Override
-	public String getUuid() {
-		return super.getUuid();
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		super.setUuid(uuid);
 	}
 	
 	public String getDataFormat() {
@@ -63,5 +52,4 @@ public class DataFormat extends BaseOpenmrsData {
 	public void setHiepatient(HiePatient hiepatient) {
 		this.hiepatient = hiepatient;
 	}
-	
 }

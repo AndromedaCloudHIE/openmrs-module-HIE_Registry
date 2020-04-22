@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+  <hie_Patient id="1"   firstName="moses" lastName="Mutessira" 
+  familyname="kavuma"  NIN="nin" dob="2005-09-22 00:00:00" uuid="UUID1"  creator="1"
+  date_created="2020-02-22 00:00:00" voided="false" />
+  <hie_Identifiers id="1"  idetifier="xxxxx"  hie_patient_id ="1" /> 
+  <hie_DataFormat id="1"  dataFormat="image" hie_patient_id ="1"  />
+  
+  <hie_Patient id="2"   firstName="moses2" lastName="Mutessira2" 
+  familyname="kavuma2"  NIN="nin2" dob="2005-09-22 00:00:00" uuid="UUID2"  creator="1"
+  date_created="2020-02-22 00:00:00" voided="false" />
+  <hie_Identifiers id="2"  idetifier="xxxxx2"  hie_patient_id ="2" /> 
+  <hie_DataFormat id="2"  dataFormat="image" hie_patient_id ="2"  />
+  
+   <hie_Patient id="3"   firstName="xxxmoses3" lastName="yyMutessira3" 
+  familyname="zzzkavuma3"  NIN="nin3" dob="2005-09-22 00:00:00" uuid="UUID3"  creator="1"
+  date_created="2020-02-22 00:00:00" voided="false" />
+  <hie_Identifiers id="3"  idetifier="xxxxx3"  hie_patient_id ="2" /> 
+  <hie_DataFormat id="3"  dataFormat="Clnical" hie_patient_id ="3"  />
+  
+  <hie_Patient id="4"   firstName="yymosesa4" lastName="xxMutessiraa4" 
+  familyname="zzzkavuma4"  NIN="nin4" dob="2005-09-22 00:00:00" uuid="UUID4"  creator="1"
+  date_created="2020-02-22 00:00:00" voided="false" />
+  <hie_Identifiers id="4"  idetifier="xxxxx4"  hie_patient_id ="2" /> 
+  <hie_DataFormat id="4"  dataFormat="Clnical" hie_patient_id ="4"  />
+</dataset>

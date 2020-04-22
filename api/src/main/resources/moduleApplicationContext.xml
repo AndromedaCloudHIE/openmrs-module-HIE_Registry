@@ -25,6 +25,11 @@
 
     <context:component-scan base-package="org.openmrs.module.hieregistry" />
 
+    <bean id = "hieregistry.AndromedaHIERegistryDao"  class=" org.openmrs.module.hieregistry.api.dao.AndromedaHIERegistryDao">
+           <property name="sessionFactory">
+                <ref bean="dbSessionFactory"/>
+            </property>
+    </bean>
     <!-- Wraps AndromedaHIERegistryService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
     <bean id="hieregistry.AndromedaHIERegistryService"

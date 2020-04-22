@@ -19,7 +19,7 @@
 			</column>
 			<column name="uuid" type="char(38)">
 				<constraints nullable="false" unique="true"></constraints>
-			</column>
+			</column> 
 			<column name="firstName" type="varchar(255)" />
 			<column name="lastName" type="varchar(255)" />
 			<column name="familyname" type="varchar(255)" />
@@ -28,6 +28,20 @@
 			<constraints nullable="true" unique="true"></constraints>
 			</column>
 			<column name="dob" type="DATETIME" />
+			<column name="voided_by" type="int"/>
+            <column name="date_voided" type="DATETIME"/>
+            <column name="void_reason" type="varchar(255)"/>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="voided" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
 		</createTable>
     </changeSet>
     
@@ -41,9 +55,6 @@
 		<createTable tableName="hie_Identifiers">
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false"/>
-			</column>
-			<column name="uuid" type="char(38)">
-				<constraints nullable="false" unique="true"></constraints>
 			</column>
 			<column name="idetifier" type="varchar(255)" />
             <column name="hie_patient_id" type="int" />
@@ -62,9 +73,6 @@
 		<createTable tableName="hie_DataFormat">
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false"/>
-			</column>
-			<column name="uuid" type="char(38)">
-				<constraints nullable="false" unique="true"></constraints>
 			</column>
 			<column name="dataFormat" type="varchar(255)" />
             <column name="hie_patient_id" type="int" />

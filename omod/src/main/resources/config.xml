@@ -44,6 +44,13 @@
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
 	
+	 <packagesWithMappedClasses>
+        org.openmrs.module.hieregistry
+    </packagesWithMappedClasses> 
+    <!-- <mappingFiles>
+	   Hie.hbm.xml 
+    </mappingFiles> -->
+  
 	
 	<!-- AOP
 	<advice>
@@ -116,6 +123,6 @@
 		<file>messages_es.properties</file>
 	</messages>
 	<!-- /Internationalization -->
-	
+		
 </module>
 

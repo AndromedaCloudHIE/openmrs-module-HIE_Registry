@@ -11,12 +11,9 @@ package org.openmrs.module.hieregistry.api;
 
 import java.util.List;
 
-import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.module.hieregistry.AndromedaHIERegistryConfig;
 import org.openmrs.module.hieregistry.HiePatient;
-import org.openmrs.module.hieregistry.Item;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -24,30 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
  * moduleApplicationContext.xml on how it is wired up.
  */
 public interface AndromedaHIERegistryService extends OpenmrsService {
-	
-	/**
-	 * Returns an item by uuid. It can be called by any authenticated user. It is fetched in read
-	 * only transaction.
-	 * 
-	 * @param uuid
-	 * @return
-	 * @throws APIException
-	 */
-	@Authorized()
-	@Transactional(readOnly = true)
-	Item getItemByUuid(String uuid) throws APIException;
-	
-	/**
-	 * Saves an item. Sets the owner to superuser, if it is not set. It can be called by users with
-	 * this module's privilege. It is executed in a transaction.
-	 * 
-	 * @param item
-	 * @return
-	 * @throws APIException
-	 */
-	@Authorized(AndromedaHIERegistryConfig.MODULE_PRIVILEGE)
-	@Transactional
-	Item saveItem(Item item) throws APIException;
 	
 	
 	@Transactional
@@ -57,10 +30,7 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	HiePatient getHiePatientByUuid(String uuid) throws APIException;
 	
 	@Transactional
-	HiePatient getHiePatientById(Integer id) throws APIException ;
-	
-	@Transactional
-	HiePatient getHiePatientByNames(String names) throws APIException;
+	HiePatient getHiePatientById(Integer id) throws APIException;
 	
 	@Transactional
 	HiePatient getHiePatientByIdentifier(String id) throws APIException;
@@ -72,12 +42,9 @@ public interface AndromedaHIERegistryService extends OpenmrsService {
 	List<HiePatient> getHiePatientsByDataFormat(String dataformat) throws APIException;
 	
 	@Transactional
-	HiePatient getHiePatient(String id , String nin,String names) throws APIException;
+	List<HiePatient> searchHiePatient(String query) throws APIException;
 	
 	@Transactional
-	List <HiePatient> searchHiePatient(String query) throws APIException;
+	List<HiePatient> getAllHiePatients() throws APIException;
 	
-	@Transactional
-	List <HiePatient> getAllHiePatients() throws APIException;
-		
 }
